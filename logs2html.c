@@ -35,12 +35,12 @@
 #include <string.h>
 #include <time.h>
 #include <ctype.h>
-#include <sys/types.h> 
-#include <math.h> 
+#include <sys/types.h>
+#include <math.h>
 #include <regex.h>
 #include "logs2html.h"
 #include "language.h"
-	
+
 #undef global
 
 #define MODULE_MAJOR 2
@@ -233,7 +233,7 @@ static void makeindexpage(l2hchan_t *ch, int year) {
 			if ((month >= 0) && (month <= 11)) {
 
 				if (month_block_orientation != 0) {
-					/* 
+					/*
 					 * Horisontal block orientation
 					 * Each table has: 1 row: month name, 1 row: day of week names, 6 rows: days of month
 					 *                 7 columns: days of month.
@@ -266,7 +266,7 @@ static void makeindexpage(l2hchan_t *ch, int year) {
 						str_write(file, "\t\t\t\t\t\t\t</tr>\n");
 					}
 				} else {
-					/* 
+					/*
 					 * Vertical block orientation
 					 * Each table has: 1 row: month name, 7 rows: (day of week + days of month) names,
 					 *                 1 column: day of week names, 6 columns: days of month.
@@ -347,11 +347,11 @@ static void makeindexpage(l2hchan_t *ch, int year) {
  * function void convertfile(l2hchan_t *ch, int year, int month, int day)
  *
  * Input:
- *   
- *   
+ *
+ *
  *
  * Output:
- *   
+ *
  *
  * Discription:
  *   переводит файлы из текстового вида в формат HTML
@@ -384,9 +384,9 @@ static void convertfile(l2hchan_t *ch, int year, int month, int day) {
 		nfree(filename);
 		return;
 	}
-	
+
 	if (lines_per_page < 0) lines_per_page = 0;
-	
+
 	int lines_count, tsl;
 	int pages_count = 0;
 	while(!feof(src_file)) {
@@ -464,7 +464,7 @@ static void convertfile(l2hchan_t *ch, int year, int month, int day) {
 			if (strncmp(buf_ptr, "--- ", 4) == 0) {  /* we don't really need this string I think */
 				continue;
 			}
-			
+
 			bool IsElseClass = false;
 			if (strncmp(buf_ptr, "Action: ", 8) == 0) {  /* command: /me */
 				str_write(file, "%s", data);
@@ -512,14 +512,14 @@ static void convertfile(l2hchan_t *ch, int year, int month, int day) {
 					}
 				}
 			}
-			
+
 			lines_count--;
-			
+
 			char *realloc_buf = NULL;
 			replace_chars(buf_ptr, &realloc_buf);
 			// We have special chars that we replaced. Now point buf_ptr to the realloc_buf,
 			// strip_codes() will now work not with 'buffer' but with 'realloc_buf'
-			if (realloc_buf != NULL) {	
+			if (realloc_buf != NULL) {
 				buf_ptr = realloc_buf;
 			}
 
@@ -537,7 +537,7 @@ static void convertfile(l2hchan_t *ch, int year, int month, int day) {
 				}
 
 				switch (tree->node_type) {
-					case NODE_MIRCCOLOR: 
+					case NODE_MIRCCOLOR:
 						{
 							if (tree->node_close) {
 								str_write(file, "</span>");
@@ -547,7 +547,7 @@ static void convertfile(l2hchan_t *ch, int year, int month, int day) {
 							}
 						}
 						break;
-					case NODE_FONTSTYLE: 
+					case NODE_FONTSTYLE:
 						{
 							if (tree->node_close) {
 								str_write(file, "</span>");
@@ -556,7 +556,7 @@ static void convertfile(l2hchan_t *ch, int year, int month, int day) {
 							}
 						}
 						break;
-					case NODE_EMAIL: 
+					case NODE_EMAIL:
 						{
 							if (!IsElseClass) { //Don't print emails on join/left, bans etc. Because client mask is look like email.
 								if (tree->node_close) {
@@ -567,7 +567,7 @@ static void convertfile(l2hchan_t *ch, int year, int month, int day) {
 							}
 						}
 						break;
-					case NODE_URI: 
+					case NODE_URI:
 						{
 							if (tree->node_close) {
 								str_write(file, "</a>");
@@ -576,17 +576,17 @@ static void convertfile(l2hchan_t *ch, int year, int month, int day) {
 							}
 						}
 						break;
-					case NODE_SPECIAL: 
+					case NODE_SPECIAL:
 						{
 							str_write(file, "%s", tree->node_data);
 						}
 						break;
 				}
-				
+
 				tree = tree->next;
 			}
 			str_write(file, "%s</span>", buf_ptr + last_tag);
-			
+
 			str_write(file, "</div>\n");
 
 			// clear memory
@@ -603,11 +603,11 @@ static void convertfile(l2hchan_t *ch, int year, int month, int day) {
 		fclose(file);
 	}
 	fclose(src_file);
-		
+
 	/*
 	 * Now, if log is splited to some number of lines (lines_per_page) we write links to other pages, and also final close tags for html files.
 	 */
-	int i, j;	
+	int i, j;
 	for (i = 1; i <= pages_count; i++) {
 		egg_snprintf(filename, filenamelength, "%s%s%s%d%02d%02d_pg%d.html", ch->outputpath, SEP, ch->logspagename, year, month, day, i);
 		if ((file = openfile(filename, "ab", false)) == NULL) {
@@ -661,7 +661,7 @@ static void convertfile(l2hchan_t *ch, int year, int month, int day) {
 
 		fclose(file);
 	}
-	
+
 	nfree(filename);
 
 	return;
@@ -761,7 +761,7 @@ static void strip_codes(char *buf_ptr_copy, l2hnode_t **string_tree) {
 									if (egg_isdigit(*buf_ptr_copy)) {     /* Is this a double digit number? */
 										bg_color[1] = *buf_ptr_copy;
 										bg_color[2] = '\0';
-										buf_ptr_copy++;            /* Is it a double digit? */ 
+										buf_ptr_copy++;            /* Is it a double digit? */
 									}
 								}
 
@@ -888,7 +888,7 @@ static void strip_codes(char *buf_ptr_copy, l2hnode_t **string_tree) {
 			 * strip_mirc_codes() ends here.
 			 */
 
-			//At that point we have temp_tree which points to the linked list of mirc codes and special chars (bold, italic) positions. 
+			//At that point we have temp_tree which points to the linked list of mirc codes and special chars (bold, italic) positions.
 			// Now close any unclose tag
 
 			if (t_0x02_opened) {
@@ -960,7 +960,7 @@ static void strip_codes(char *buf_ptr_copy, l2hnode_t **string_tree) {
 				} else { // No uri or email in string, simply assign temp_tree to result
 					method = 3;
 				}
-			
+
 				l2hnode_t *temp;
 				if (method == 1) {
 					while ((temp_tree != NULL) && (temp_tree->node_so < pmatch_email.rm_so + (dd - start))) {
@@ -986,7 +986,7 @@ static void strip_codes(char *buf_ptr_copy, l2hnode_t **string_tree) {
 						temp->next = NULL;
 						node_append(string_tree, temp);
 					}
-				
+
 					newnode = nmalloc(sizeof(struct l2hnode_struct));
 					newnode->next = NULL;
 					newnode->node_type = NODE_EMAIL;
@@ -1003,7 +1003,7 @@ static void strip_codes(char *buf_ptr_copy, l2hnode_t **string_tree) {
 						temp->next = NULL;
 						node_append(string_tree, temp);
 					}
-						
+
 					newnode = nmalloc(sizeof(struct l2hnode_struct));
 					newnode->next = NULL;
 					newnode->node_type = NODE_URI;
@@ -1034,7 +1034,7 @@ static void strip_codes(char *buf_ptr_copy, l2hnode_t **string_tree) {
 						temp->next = NULL;
 						node_append(string_tree, temp);
 					}
-				
+
 					newnode = nmalloc(sizeof(struct l2hnode_struct));
 					newnode->next = NULL;
 					newnode->node_type = NODE_URI;
@@ -1053,10 +1053,10 @@ static void strip_codes(char *buf_ptr_copy, l2hnode_t **string_tree) {
 					}
 					break;
 				}
-				
+
 			} while ((status_email == 0) || (status_uri == 0));
-			
-		
+
+
 	return;
 }
 /****************************************************************************/
@@ -1074,7 +1074,7 @@ static void node_append(struct l2hnode_struct **h, struct l2hnode_struct *i)
   for (; *h; h = &((*h)->next));
   *h = i;
   return;
-} 
+}
 /*
  * list_append() ends here.
  */
@@ -1165,17 +1165,17 @@ static void replace_chars(char *buf_ptr_copy, char **realloc_buf)
  * function int cmd_makemainpage(struct userrec *u, int idx, char *par)
  *
  * Input:
- *   
- *   
+ *
+ *
  *
  * Output:
- *   
+ *
  *
  * Discription:
- *   
+ *
  */
 static int cmd_makemainpage(struct userrec *u, int idx, char *par) {
-	
+
 	time_t start, finish;
 	time(&start);
 	putlog(LOG_CMDS, "*", "#%s# begin creation of index pages.", dcc[idx].nick);
@@ -1186,7 +1186,7 @@ static int cmd_makemainpage(struct userrec *u, int idx, char *par) {
 	l2hchan_t *p = logs2htmlchanlist;
 	while (p != NULL) {
 		int i;
-		
+
 		start_year = MIN(MAX(start_year, 2000), tblock.tm_year + 1900);
 
 		for (i = start_year; i <= tblock.tm_year + 1900; i++) {
@@ -1203,7 +1203,7 @@ static int cmd_makemainpage(struct userrec *u, int idx, char *par) {
 		putlog(LOG_CMDS, "*", "#%s# It takes < 1 second.", dcc[idx].nick);
 	}
 	else {
-		putlog(LOG_CMDS, "*", "#%s# It takes %f second%s.", dcc[idx].nick, elapsed_time, (elapsed_time != 1.0) ? "s" : "");	
+		putlog(LOG_CMDS, "*", "#%s# It takes %f second%s.", dcc[idx].nick, elapsed_time, (elapsed_time != 1.0) ? "s" : "");
 	}
 
 	return 0;
@@ -1216,14 +1216,14 @@ static int cmd_makemainpage(struct userrec *u, int idx, char *par) {
  * function int convertalllogs(struct userrec *u, int idx, char *par)
  *
  * Input:
- *   
- *   
+ *
+ *
  *
  * Output:
- *   
+ *
  *
  * Discription:
- *   
+ *
  */
 static int cmd_convertalllogs(struct userrec *u, int idx, char *par) {
 
@@ -1254,13 +1254,13 @@ static int cmd_convertlogs(struct userrec *u, int idx, char *par) {
 			makeindexpage(p, tblock.tm_year + 1900);
 			p = p->next;
 		}
-		
+
 	} else {
 
 		int i, j, k;
 		start_year = MIN(MAX(start_year, 2000), tblock.tm_year + 1900);
 		char *part;
-		
+
 		part = newsplit(&par);
 		if (!egg_strncasecmp(part, "all", 3)) { // "all". Convert logs for all channels for all years.
 
@@ -1301,7 +1301,7 @@ static int cmd_convertlogs(struct userrec *u, int idx, char *par) {
 				}
 
 			} else { // No second parameter. We have only year
-				
+
 				month = atoi(part);
 				if ((month < 1) || (month > 12)) { // Check if parameter is valid month
 					dprintf(idx, " Invalid parameter. 'month' must be between %d and %d.\n", 1, 12);
@@ -1350,7 +1350,7 @@ static int cmd_convertlogs(struct userrec *u, int idx, char *par) {
 		putlog(LOG_CMDS, "*", "#%s# It takes < 1 second.", dcc[idx].nick);
 	}
 	else {
-		putlog(LOG_CMDS, "*", "#%s# It takes %f second%s.", dcc[idx].nick, elapsed_time, (elapsed_time != 1.0) ? "s" : "");	
+		putlog(LOG_CMDS, "*", "#%s# It takes %f second%s.", dcc[idx].nick, elapsed_time, (elapsed_time != 1.0) ? "s" : "");
 	}
 	return 0;
 } /* convertlogs() */
@@ -1372,14 +1372,14 @@ static void initialize(void)
 	strlcpy(month_names[9],	LOGS2HTML_OCTOBER,		MAX_MONTH_LENGTH);
 	strlcpy(month_names[10],LOGS2HTML_NOVEMBER,		MAX_MONTH_LENGTH);
 	strlcpy(month_names[11],LOGS2HTML_DECEMBER,		MAX_MONTH_LENGTH);
-	strlcpy(days_names[0],	LOGS2HTML_MONDAY,		MAX_DAY_LENGTH); 
+	strlcpy(days_names[0],	LOGS2HTML_MONDAY,		MAX_DAY_LENGTH);
 	strlcpy(days_names[1],	LOGS2HTML_TUESDAY,		MAX_DAY_LENGTH);
 	strlcpy(days_names[2],	LOGS2HTML_WEDNESDAY,	MAX_DAY_LENGTH);
 	strlcpy(days_names[3],	LOGS2HTML_THURSDAY,		MAX_DAY_LENGTH);
 	strlcpy(days_names[4],	LOGS2HTML_FRIDAY,		MAX_DAY_LENGTH);
 	strlcpy(days_names[5],	LOGS2HTML_SATURDAY,		MAX_DAY_LENGTH);
 	strlcpy(days_names[6],	LOGS2HTML_SUNDAY,		MAX_DAY_LENGTH);
-	
+
 	// Precompile our regular expressions
     if (regcomp(&re_uri, "((file|gopher|news|nntp|telnet|http|ftp|https|ftps|sftp)://|www\\.|ftp\\.)+(([a-zA-Z0-9\\._-]+\\.[a-zA-Z]{2,6})|([0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}))(/(([a-zA-Z0-9%_\\./-=?]|\\&amp;)*([a-zA-Z0-9%_\\/-=?]|\\&amp;))*)?", REG_EXTENDED|REG_ICASE) != 0) {
 		putlog(LOG_CMDS, "*", "logs2html: Error while making regular expression for uri.");
@@ -1520,7 +1520,7 @@ static void event_addlogs2htmlchan(void)
 }
 
 
-/* 
+/*
  * Calculate the memory we keep allocated.
  */
 static int logs2html_expmem()
@@ -1538,7 +1538,7 @@ static int logs2html_expmem()
 		if (p->logspagetitle != NULL)	size += strlen(p->logspagetitle) + 1;
 		p = p->next;
 	}
-	
+
 	size += MAX_MONTH_LENGTH * 12;
 	size += MAX_DAY_LENGTH * 7;
 
@@ -1571,7 +1571,7 @@ static void logs2html_report(int idx, int details)
 	}
 
 	return;
-} 
+}
 
 static cmd_t mydcc[] = {
 	{"convertalllogs",	"n",	cmd_convertalllogs,	NULL},
@@ -1579,7 +1579,7 @@ static cmd_t mydcc[] = {
 	{"makeindexpage",	"n",	cmd_makemainpage,	NULL},
 	{"convertlogs",		"n",	cmd_convertlogs,	NULL},
 	{NULL,				NULL,	NULL,				NULL}	/* Mark end. */
-}; 
+};
 
 static tcl_strings my_tcl_strings[] = {
 	{"logfile-suffix",		logfile_suffix,				20,		0},
@@ -1588,7 +1588,7 @@ static tcl_strings my_tcl_strings[] = {
 	{"logspage-top",		logspage_top_filename,		256,	0},
 	{"logspage-bottom",		logspage_bottom_filename,	256,	0},
 	{"user-style",			userstyle_filename,			256,	0},
-	{"insert-encoding-str",	encoding_string,			30,		0},  	  
+	{"insert-encoding-str",	encoding_string,			30,		0},
 	{NULL,					NULL,						0,		0}	/* Mark end. */
 };
 
@@ -1625,12 +1625,12 @@ static char *logs2html_close()
     rem_help_reference(MODULE_NAME".help");
 	del_lang_section(MODULE_NAME);
 	rem_builtins(H_dcc, mydcc);
-    rem_tcl_commands(my_tcl_cmds); 
+    rem_tcl_commands(my_tcl_cmds);
 	rem_tcl_strings(my_tcl_strings);
 	rem_tcl_ints(my_tcl_ints);
 
 	module_undepend(MODULE_NAME);
-	
+
 	return NULL;
 }
 
@@ -1646,7 +1646,7 @@ static Function logs2html_table[] = {
 char *logs2html_start(Function *global_funcs)
 {
 	global = global_funcs;
- 
+
 	/* Register the module. */
 	module_register(MODULE_NAME, logs2html_table, MODULE_MAJOR, MODULE_MINOR);
 
@@ -1659,11 +1659,11 @@ char *logs2html_start(Function *global_funcs)
 	add_tcl_strings(my_tcl_strings);
 	add_tcl_commands(my_tcl_cmds);
 	add_builtins(H_dcc, mydcc);
-	add_lang_section(MODULE_NAME);	
+	add_lang_section(MODULE_NAME);
 	add_help_reference(MODULE_NAME".help");
 
 	initialize();
-	
+
 	add_hook(HOOK_5MINUTELY, (Function) logs2html_hook_5minutely);
 	add_hook(HOOK_HOURLY, (Function) logs2html_hook_hourly);
 	add_hook(HOOK_PRE_REHASH, (Function) logs2html_hook_pre_rehash);

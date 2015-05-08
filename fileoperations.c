@@ -61,16 +61,16 @@ static FILE *openfile(char *filename, const char *mode, bool silent) {
  * function void writefromexfile(FILE *dst_file, char *exfilename)
  *
  * Input:
- *   
- *   
- *   
+ *
+ *
+ *
  *
  * Output:
- *   
+ *
  *
  * Discription:
- *   
- *   
+ *
+ *
  */
 static void writefromexfile(FILE *dst_file, char *exfilename) {
 	FILE *addfile;

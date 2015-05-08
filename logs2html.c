@@ -103,15 +103,15 @@ static void event_addlogs2htmlchan(void);
 /*
  * getdayofweek()
  * Input:
- *  year	- год
- *  month	- месяц
- *  day		- день
+ *  year	- РіРѕРґ
+ *  month	- РјРµСЃСЏС†
+ *  day		- РґРµРЅСЊ
  *
  * Output:
- *  0 - Понедельник, 1 - Вторник, 2 - Среда и.т.д.
+ *  0 - РџРѕРЅРµРґРµР»СЊРЅРёРє, 1 - Р’С‚РѕСЂРЅРёРє, 2 - РЎСЂРµРґР° Рё.С‚.Рґ.
  *
  * Description:
- *  Функция вычисляет на какой день недели приходится переданная дата
+ *  Р¤СѓРЅРєС†РёСЏ РІС‹С‡РёСЃР»СЏРµС‚ РЅР° РєР°РєРѕР№ РґРµРЅСЊ РЅРµРґРµР»Рё РїСЂРёС…РѕРґРёС‚СЃСЏ РїРµСЂРµРґР°РЅРЅР°СЏ РґР°С‚Р°
  */
 static int getdayofweek(int year, int month, int day)
 {
@@ -354,7 +354,7 @@ static void makeindexpage(l2hchan_t *ch, int year) {
  *   
  *
  * Discription:
- *   переводит файлы из текстового вида в формат HTML
+ *   РїРµСЂРµРІРѕРґРёС‚ С„Р°Р№Р»С‹ РёР· С‚РµРєСЃС‚РѕРІРѕРіРѕ РІРёРґР° РІ С„РѕСЂРјР°С‚ HTML
  */
 static void convertfile(l2hchan_t *ch, int year, int month, int day) {
 

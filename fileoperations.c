@@ -116,14 +116,14 @@ static void str_write(FILE *file, char *fstr, ... ) {
 
 	buffer = (char *)nmalloc(size);
 
-	va_start(ap, fstr);
 	while (true) {
+		va_start(ap, fstr);
 		nchars = egg_vsnprintf(buffer, size, fstr, ap);
+		va_end(ap);
 		if (nchars < size) break;
 		size *= 2;
 		buffer = (char *)nrealloc(buffer, size);
 	}
-	va_end(ap);
 
 	fwrite(buffer, sizeof(char), strlen(buffer), file);
 	nfree(buffer); buffer = NULL;

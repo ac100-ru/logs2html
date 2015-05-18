@@ -1384,7 +1384,7 @@ static void initialize(void)
 	strlcpy(days_names[6],	LOGS2HTML_SUNDAY,		MAX_DAY_LENGTH);
 
 	// Precompile our regular expressions
-    if (regcomp(&re_uri, "((file|gopher|news|nntp|telnet|http|ftp|https|ftps|sftp)://|www\\.|ftp\\.)+(([a-zA-Z0-9\\._-]+\\.[a-zA-Z]{2,6})|([0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}))(/(([a-zA-Z0-9%_:\\./=?-]|\\&amp;)*([a-zA-Z0-9%_:\\/=?-]|\\&amp;))*)?", REG_EXTENDED|REG_ICASE) != 0) {
+    if (regcomp(&re_uri, "((file|gopher|news|nntp|telnet|http|ftp|https|ftps|sftp)://|www\\.|ftp\\.)+(([a-zA-Z0-9\\._-]+\\.[a-zA-Z]{2,6})|([0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}))(/(([a-zA-Z0-9%_#:\\./=?-]|\\&amp;)*([a-zA-Z0-9%_#:\\/=?-]|\\&amp;))*)?", REG_EXTENDED|REG_ICASE) != 0) {
 		putlog(LOG_CMDS, "*", "logs2html: Error while making regular expression for uri.");
     }
     if (regcomp(&re_uritrunc, "^((file|gopher|news|nntp|telnet|http|ftp|https|ftps|sftp)://){1}", REG_EXTENDED|REG_ICASE|REG_NOSUB) != 0) {

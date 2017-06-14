@@ -1,4 +1,4 @@
-logs2html.mod v.2.4.3 by Alexander Fedotov aka Shmupsik aka shurikvz
+logs2html.mod v.2.4.3.1 by shmupsik aka shurikvz
 e-mail: shurikvz@mail.ru
 
 This module converts the log files of your eggdrop to the html format. It also creates a page-calendar with links to that created files.
@@ -24,13 +24,20 @@ Module has 4 commands, which you can use from dcc chat:
 
 
 *******************************************************************************
-You can try to find latest version on http://sourceforge.net/projects/logs2html or http://www.halftone.ru/projects
+You can try to find latest version on http://sourceforge.net/projects/logs2html
 *******************************************************************************
 
 
 
 *******************************************************************************
 Version history:
+
+12.05.15 - version 2.4.3.1
+  - NO major updates at all, sorry.
+  - added Turkish Language file by Ufuk CINGAY as it has been reported before
+  - some bugfixes thanks to Andrey S. Danin (http://sourceforge.net/u/stuwdrey/profile/)
+
+
 28.05.09 - version 2.4.3
   - now correctly output '"' and '&' char to html
   - improved search of uri and email

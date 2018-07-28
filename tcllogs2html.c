@@ -22,14 +22,14 @@
  */
 
 static void get_log_path(char *channel, char **inputpath) {
-	if (Tcl_VarEval(interp, "logfile", (char *)NULL) != TCL_OK || !interp->result[0]) {
+	if (Tcl_VarEval(interp, "logfile", (char *)NULL) != TCL_OK || !Tcl_GetStringResult(interp)[0]) {
 		putlog(LOG_MISC, "*", "Error finding logfiles! Please check settings in your config file to be sure statement \"logfile\" present.");
 		return;
 	}
 
-	int len = strlen(interp->result) + 1;
+	int len = strlen(Tcl_GetStringResult(interp)) + 1;
 	char *logslist = nmalloc(len);
-	strlcpy(logslist, interp->result, len);
+	strlcpy(logslist, Tcl_GetStringResult(interp), len);
 
 	char *p = logslist, *q, *r;
 	while ((q = strchr(p, '{')) != NULL) {

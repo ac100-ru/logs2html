@@ -1653,7 +1653,7 @@ char *logs2html_start(Function *global_funcs)
 	/* Register the module. */
 	module_register(MODULE_NAME, logs2html_table, MODULE_MAJOR, MODULE_MINOR);
 
-	if (!module_depend(MODULE_NAME, "eggdrop", 106, 18)) {
+	if (!module_depend(MODULE_NAME, "eggdrop", 108, 0)) {
 		module_undepend(MODULE_NAME);
 		return "This module requires Eggdrop 1.6.18 or later.";
 	}
